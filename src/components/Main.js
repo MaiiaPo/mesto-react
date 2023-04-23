@@ -1,9 +1,12 @@
 import React from "react";
 import api from "../utils/api";
+import Card from "./Card";
 function Main(props) {
   const [userName, setUserName] = React.useState('');
   const [userDescription, setUserDescription] = React.useState('');
   const [userAvatar, setUserAvatar] = React.useState('');
+
+  const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     api.getUserData().then((userData) => {
@@ -16,11 +19,12 @@ function Main(props) {
       console.error(err);
     });
 
-
-
-    // Возвращаем функцию, которая удаляет эффекты
-    return () => {
-    };
+    api.getInitialCards().then((cardsData) => {
+        setCards(cardsData);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   return (
@@ -48,7 +52,13 @@ function Main(props) {
           onClick={props.onAddPlace}
         />
       </section>
-      <section className="elements" aria-label="Места"></section>
+      <section className="elements" aria-label="Места">
+        {cards.map((card) => {
+          return (
+            <Card card={card}/>
+          );
+        })}
+      </section>
     </main>
   )
 }

@@ -12,7 +12,7 @@ class Api {
 
   // Получение существующих карточек с сервера
   getInitialCards() {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards`, {
+    return fetch(`${this._address}/cards`, {
       headers: {
         authorization: this._token,
       },
