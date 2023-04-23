@@ -55,7 +55,10 @@ function Main(props) {
       <section className="elements" aria-label="Места">
         {cards.map((card) => {
           return (
-            <Card card={card}/>
+            <Card
+              card={card}
+              onCardClick={props.onCardClick}
+            />
           );
         })}
       </section>
