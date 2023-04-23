@@ -1,34 +1,13 @@
-import headerLogoMobile from './images/logo_mobile.svg'
-import headerLogo from './images/logo.svg'
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
 function App() {
   return (
     <div className="App">
       <div className="page">
-        <header className="header">
-          <picture>
-            <source className="header__logo" media="(max-width: 767px)" srcset={headerLogoMobile} />
-            <img className="header__logo" src={headerLogo} alt="Логотип 'Место'"/>
-          </picture>
-        </header>
-        <main className="content">
-          <section className="profile">
-            <div className="profile__avatar-block">
-              <img className="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар"/>
-            </div>
-            <div className="profile__info">
-              <div className="profile__title">
-                <h1 className="profile__name">Жак-Ив Кусто</h1>
-                <button className="profile__edit link" type="button" aria-label="Редактировать"></button>
-              </div>
-              <p className="profile__description">Исследователь океана</p>
-            </div>
-            <button className="profile__add-button link" type="button" aria-label="Добавить"></button>
-          </section>
-          <section className="elements" aria-label="Места"></section>
-        </main>
-        <footer className="footer">
-          <p className="footer__copyright" lang="en">&copy; 2022 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
 
         {/*POPUP*/}
         {/*POPUP EDIT AVATAR IMAGE*/}
