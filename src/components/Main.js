@@ -1,26 +1,9 @@
 import avatar from "../images/avatar.jpg";
-function Main() {
-  function handleEditAvatarClick() {
-    const avatarEditButton = document.querySelector('.popup_type_edit-avatar')
-    avatarEditButton.classList.add('popup_opened');
-
-  }
-
-  function handleEditProfileClick() {
-    const profileEditButton = document.querySelector('.popup_type_edit')
-    profileEditButton.classList.add('popup_opened');
-
-  }
-
-  function handleAddPlaceClick() {
-    const addPlaceButton = document.querySelector('.popup_type_add')
-    addPlaceButton.classList.add('popup_opened');
-  }
-
+function Main(props) {
   return (
     <main className="content">
       <section className="profile">
-        <div className="profile__avatar-block" onClick={handleEditAvatarClick}>
+        <div className="profile__avatar-block" onClick={props.onEditAvatar}>
           <img className="profile__avatar" src={avatar} alt="Аватар"/>
         </div>
         <div className="profile__info">
@@ -30,7 +13,7 @@ function Main() {
               className="profile__edit link"
               type="button"
               aria-label="Редактировать"
-              onClick={handleEditProfileClick}
+              onClick={props.onEditProfile}
             />
           </div>
           <p className="profile__description">Исследователь океана</p>
@@ -39,7 +22,7 @@ function Main() {
           className="profile__add-button link"
           type="button"
           aria-label="Добавить"
-          onClick={handleAddPlaceClick}
+          onClick={props.onAddPlace}
         />
       </section>
       <section className="elements" aria-label="Места"></section>
