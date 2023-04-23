@@ -1,7 +1,7 @@
 class Api {
-  constructor(token, groupId) {
+  constructor({token, address}) {
     this._token = token;
-    this._groupId = groupId;
+    this._address = address;
   }
 
   _response(res) {
@@ -21,7 +21,7 @@ class Api {
   }
 
   getUserData() {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/users/me`, {
+    return fetch(`${this._address}/users/me`, {
       headers: {
         authorization: this._token,
       },
