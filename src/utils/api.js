@@ -30,7 +30,7 @@ class Api {
   }
 
   updateUserData(userData) {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/users/me`, {
+    return fetch(`${this._address}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
@@ -38,7 +38,7 @@ class Api {
       },
       body: JSON.stringify({
         name: userData.name,
-        about: userData.description,
+        about: userData.about,
       }),
     })
       .then((res) => this._response(res));

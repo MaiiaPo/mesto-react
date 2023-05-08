@@ -4,11 +4,11 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import EditAvatar from "./EditAvatar";
-import EditProfile from "./EditProfile";
 import AddNewCard from "./AddNewCard";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   // Видимость попапов
@@ -87,6 +87,16 @@ function App() {
       });
   }
 
+  function handleUpdateUser(userData) {
+    api.updateUserData(userData).then((currentUser) => {
+      setCurrentUser(currentUser);
+      closeAllPopups();
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <div className="App">
       <div className="page">
@@ -109,12 +119,10 @@ function App() {
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
           />
-          <PopupWithForm
-            name='edit'
-            title='Редактировать профиль'
-            children={<EditProfile />}
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser}
           />
           <PopupWithForm
             name='add'

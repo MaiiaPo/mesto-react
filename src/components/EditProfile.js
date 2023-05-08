@@ -1,4 +1,4 @@
-function EditProfile() {
+function EditProfile(props) {
   return (
     <>
       <label className="form__field">
@@ -11,6 +11,8 @@ function EditProfile() {
           minLength="2"
           maxLength="40"
           required
+          value={props.name}
+          onChange={props.onChangeName}
         />
         <span className="popup__error popup__error_visible name-input-error"></span>
       </label>
@@ -24,6 +26,8 @@ function EditProfile() {
           minLength="2"
           maxLength="200"
           required
+          value={props.description}
+          onChange={props.onChangeDescription}
         />
         <span className="popup__error popup__error_visible description-input-error"></span>
       </label>
