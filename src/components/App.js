@@ -16,11 +16,29 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
+  const [cards, setCards] = React.useState([]);
+
   // Выбранная карточка
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   // Информация о пользователе
   const [currentUser, setCurrentUser] = React.useState(null);
+
+  React.useEffect(() => {
+    api.getUserData().then((userData) => {
+      setCurrentUser(userData);
+    })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    api.getInitialCards().then((cardsData) => {
+      setCards(cardsData);
+    })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -46,14 +64,19 @@ function App() {
     setSelectedCard(null);
   }
 
-  React.useEffect(() => {
-    api.getUserData().then((userData) => {
-      setCurrentUser(userData);
-    })
+  function handleCardLike(card) {
+    // Есть ли у карточки лайк, поставленный текущим пользователем
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
-  }, []);
+  }
 
   return (
     <div className="App">
@@ -61,10 +84,12 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
           <Main
+            cards={cards}
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
             onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
           />
           <Footer />
           <PopupWithForm

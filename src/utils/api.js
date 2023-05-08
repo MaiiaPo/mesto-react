@@ -81,18 +81,9 @@ class Api {
     }).then((res) => this._response(res));
   }
 
-  addLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: {
-        authorization: this._token,
-      },
-    }).then((res) => this._response(res));
-  }
-
-  removeLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards/likes/${cardId}`, {
-      method: 'DELETE',
+  changeLikeCardStatus(cardId, isLiked) {
+    return fetch(`${this._address}/cards/likes/${cardId}`, {
+      method: isLiked ? 'PUT' : 'DELETE',
       headers: {
         authorization: this._token,
       },

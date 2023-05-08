@@ -1,20 +1,9 @@
 import React from "react";
-import api from "../utils/api";
 import Card from "./Card";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api.getInitialCards().then((cardsData) => {
-        setCards(cardsData);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   return (
     <main className="content">
@@ -42,12 +31,13 @@ function Main(props) {
         />
       </section>
       <section className="elements" aria-label="Места">
-        {cards.map((card) => {
+        {props.cards.map((card) => {
           return (
             <Card
               key={card._id}
               card={card}
               onCardClick={props.onCardClick}
+              onCardLike={props.onCardLike}
             />
           );
         })}
