@@ -22,12 +22,12 @@ function Card(props) {
   }
 
   function handleDeleteClick() {
-    console.log('удалить карточку');
+    props.onCardDelete(props.card);
   }
 
   return (
     <article className="element">
-      { isOwn && <button className="element__delete link" type="button" aria-label="Удалить" />}
+      { isOwn && <button className="element__delete link" type="button" aria-label="Удалить" onClick={handleDeleteClick} />}
       <img className="element__image" src={props.card.link} alt={props.card.name} onClick={handleClick}/>
       <div className="element__info">
         <h2 className="element__title">{props.card.name}</h2>

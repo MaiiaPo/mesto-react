@@ -59,7 +59,7 @@ class Api {
   }
 
   addCard(data) {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards`, {
+    return fetch(`${this._address}/cards`, {
       method: 'POST',
       headers: {
         authorization: this._token,
@@ -73,7 +73,7 @@ class Api {
   }
 
   removeCard(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/cards/${cardId}`, {
+    return fetch(`${this._address}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._token,
