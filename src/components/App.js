@@ -3,12 +3,12 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
-import AddNewCard from "./AddNewCard";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   // Видимость попапов
@@ -98,9 +98,18 @@ function App() {
   }
 
   function handleUpdateAvatar({ avatar }) {
-    api.editAvatar({ avatar })
-      .then((userData) => {
+    api.editAvatar({ avatar }).then((userData) => {
         setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function handleAddPlaceSubmit(newPlace) {
+    api.addCard(newPlace).then((newCard) => {
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
@@ -133,12 +142,10 @@ function App() {
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
           />
-          <PopupWithForm
-            name='add'
-            title='Новое место'
-            children={<AddNewCard />}
+          <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
+            onAddPlace={handleAddPlaceSubmit}
           />
           <PopupWithForm
             name='confirm'

@@ -1,4 +1,4 @@
-function AddNewCard() {
+function AddNewCard(props) {
   return (
     <>
       <label className="form__field">
@@ -10,6 +10,8 @@ function AddNewCard() {
           id="name-place-input"
           minLength="2"
           maxLength="30"
+          value={props.name}
+          onChange={props.onChangeName}
           required
         />
         <span className="popup__error popup__error_visible name-place-input-error"></span>
@@ -21,6 +23,8 @@ function AddNewCard() {
           placeholder="Ссылка на картинку"
           className="popup__input popup__input_type_link"
           id="link-input"
+          value={props.link}
+          onChange={props.onChangeLink}
           required
         />
         <span className="popup__error popup__error_visible link-input-error"></span>
