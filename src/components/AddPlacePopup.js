@@ -2,25 +2,25 @@ import PopupWithForm from "./PopupWithForm";
 import React from "react";
 import {useForm} from "../hooks/useForm";
 
-function AddPlacePopup (props) {
+function AddPlacePopup ({onAddPlace, isOpen, onClose, isLoading}) {
   const {values, handleChange, setValues} = useForm({namePlace: '', link: ''});
 
   React.useEffect(() => {
     setValues({namePlace: '', link: ''});
-  }, [props.isOpen]);
+  }, [isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onAddPlace({ name: values.namePlace, link: values.link });
+    onAddPlace({ name: values.namePlace, link: values.link });
   }
 
   return (
     <PopupWithForm
       name='add'
       title='Новое место'
-      buttonValue={props.isLoading? 'Сохранение...' : 'Сохранить'}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      buttonValue={isLoading? 'Сохранение...' : 'Сохранить'}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <label className="form__field">

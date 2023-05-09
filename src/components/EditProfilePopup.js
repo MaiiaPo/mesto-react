@@ -3,7 +3,7 @@ import React from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
 import {useForm} from "../hooks/useForm";
 
-function EditProfilePopup (props) {
+function EditProfilePopup ({isOpen, onClose, isLoading, onUpdateUser}) {
   const {values, handleChange, setValues} = useForm({name: '', description: ''});
 
   const currentUser = React.useContext(CurrentUserContext);
@@ -12,13 +12,13 @@ function EditProfilePopup (props) {
     if(currentUser){
       setValues({name: currentUser.name, description: currentUser.about});
     }
-  }, [currentUser, props.isOpen]);
+  }, [currentUser, isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     // Передаём значения управляемых компонентов во внешний обработчик
-    props.onUpdateUser({
+    onUpdateUser({
       name: values.name,
       about: values.description,
     });
@@ -28,9 +28,9 @@ function EditProfilePopup (props) {
     <PopupWithForm
       name='edit'
       title='Редактировать профиль'
-      buttonValue={props.isLoading? 'Сохранение...' : 'Сохранить'}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      buttonValue={isLoading? 'Сохранение...' : 'Сохранить'}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <label className="form__field">
