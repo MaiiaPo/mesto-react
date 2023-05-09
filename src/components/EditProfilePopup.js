@@ -38,18 +38,16 @@ function EditProfilePopup (props) {
     <PopupWithForm
       name='edit'
       title='Редактировать профиль'
-      children={<EditProfile />}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      onSubmit={handleSubmit}
-    >
-      <EditProfile
+      children={<EditProfile
         name = {name}
         description = {description}
         onChangeName={handleNameChange}
         onChangeDescription={handleDescriptionChange}
-      />
-    </PopupWithForm>
+      />}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      onSubmit={handleSubmit}
+    />
   )
 }
 

@@ -3,12 +3,12 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
-import EditAvatar from "./EditAvatar";
 import AddNewCard from "./AddNewCard";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   // Видимость попапов
@@ -74,7 +74,7 @@ function App() {
         );
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -83,7 +83,7 @@ function App() {
       setCards((state) => state.filter((c) => c._id !== card._id));
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -93,7 +93,18 @@ function App() {
       closeAllPopups();
     })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
+      });
+  }
+
+  function handleUpdateAvatar({ avatar }) {
+    api.editAvatar({ avatar })
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }
 
@@ -112,12 +123,10 @@ function App() {
             onCardDelete={handleCardDelete}
           />
           <Footer />
-          <PopupWithForm
-            name='edit-avatar'
-            title='Обновить аватар'
-            children={<EditAvatar />}
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
           />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}

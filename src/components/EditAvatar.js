@@ -1,7 +1,8 @@
-function EditAvatar() {
+function EditAvatar(props) {
   return (
     <label className="form__field">
       <input
+        ref={props.setRef}
         type="url"
         name="avatar-link"
         placeholder="Ссылка на аватар"

@@ -45,14 +45,14 @@ class Api {
   }
 
   editAvatar(link) {
-    return fetch(`https://mesto.nomoreparties.co/v1/${this._groupId}/users/me/avatar`, {
+    return fetch(`${this._address}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
         'Content-type': 'application/json',
       },
       body: JSON.stringify({
-        avatar: link,
+        avatar: link.avatar,
       }),
     })
       .then((res) => this._response(res));
