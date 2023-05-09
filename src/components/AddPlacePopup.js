@@ -6,7 +6,7 @@ function AddPlacePopup (props) {
   const {values, handleChange, setValues} = useForm({namePlace: '', link: ''});
 
   React.useEffect(() => {
-    setValues({});
+    setValues({namePlace: '', link: ''});
   }, [props.isOpen]);
 
   function handleSubmit(e) {
