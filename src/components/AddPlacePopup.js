@@ -3,7 +3,7 @@ import React from "react";
 import {useForm} from "../hooks/useForm";
 
 function AddPlacePopup ({onAddPlace, isOpen, onClose, isLoading}) {
-  const {values, handleChange, setValues} = useForm({namePlace: '', link: ''});
+  const {values, handleChange, setValues} = useForm({});
 
   React.useEffect(() => {
     setValues({namePlace: '', link: ''});
