@@ -4,33 +4,35 @@ class Api {
     this._address = address;
   }
 
-  _response(res) {
+  _checkResponse(res) {
     if (res.ok) return res.json();
     // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
+  _request(url, options) {
+    return fetch(`${this._address}${url}`, options).then(this._checkResponse)
+  }
+
   // Получение существующих карточек с сервера
   getInitialCards() {
-    return fetch(`${this._address}/cards`, {
+    return this._request('/cards', {
       headers: {
         authorization: this._token,
       },
     })
-      .then((res) => this._response(res));
   }
 
   getUserData() {
-    return fetch(`${this._address}/users/me`, {
+    return this._request('/users/me', {
       headers: {
         authorization: this._token,
       },
     })
-      .then((res) => this._response(res));
   }
 
   updateUserData(userData) {
-    return fetch(`${this._address}/users/me`, {
+    return this._request('/users/me', {
       method: 'PATCH',
       headers: {
         authorization: this._token,
@@ -41,11 +43,10 @@ class Api {
         about: userData.about,
       }),
     })
-      .then((res) => this._response(res));
   }
 
   editAvatar(link) {
-    return fetch(`${this._address}/users/me/avatar`, {
+    return this._request('/users/me/avatar', {
       method: 'PATCH',
       headers: {
         authorization: this._token,
@@ -55,11 +56,10 @@ class Api {
         avatar: link.avatar,
       }),
     })
-      .then((res) => this._response(res));
   }
 
   addCard(data) {
-    return fetch(`${this._address}/cards`, {
+    return this._request('/cards', {
       method: 'POST',
       headers: {
         authorization: this._token,
@@ -69,25 +69,25 @@ class Api {
         name: data.name,
         link: data.link,
       }),
-    }).then((res) => this._response(res));
+    })
   }
 
   removeCard(cardId) {
-    return fetch(`${this._address}/cards/${cardId}`, {
+    return this._request(`/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._token,
       },
-    }).then((res) => this._response(res));
+    })
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._address}/cards/likes/${cardId}`, {
+    return this._request(`/cards/likes/${cardId}`, {
       method: isLiked ? 'PUT' : 'DELETE',
       headers: {
         authorization: this._token,
       },
-    }).then((res) => this._response(res));
+    })
   }
 }
 
