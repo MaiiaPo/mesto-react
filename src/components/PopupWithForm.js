@@ -1,8 +1,4 @@
 function PopupWithForm(props) {
-  const buttonText = props.buttonValue
-    ? props.buttonValue
-    : 'Сохранить';
-
   return (
     <div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_opened' : ''}`} >
       <div className="popup__container">
@@ -16,7 +12,7 @@ function PopupWithForm(props) {
         <form name={`${props.name}_form`} className="popup__form form" onSubmit={props.onSubmit}>
           <fieldset className="form__set">
             {props.children}
-            <input type="submit" value={buttonText} className="popup__button"/>
+            <input type="submit" value={props.buttonValue} className="popup__button"/>
           </fieldset>
         </form>
       </div>

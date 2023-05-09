@@ -10,10 +10,15 @@ function EditAvatarPopup (props) {
     });
   }
 
+  React.useEffect(() => {
+    refUrl.current.value = '';
+  }, [props.isOpen]);
+
   return (
     <PopupWithForm
       name='edit-avatar'
       title='Обновить аватар'
+      buttonValue={props.isLoading? 'Сохранение...' : 'Сохранить'}
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}

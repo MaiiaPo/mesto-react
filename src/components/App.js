@@ -24,6 +24,8 @@ function App() {
   // Информация о пользователе
   const [currentUser, setCurrentUser] = React.useState(null);
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   React.useEffect(() => {
     api.getUserData().then((userData) => {
       setCurrentUser(userData);
@@ -104,33 +106,39 @@ function App() {
   }
 
   function handleUpdateUser(userData) {
+    setIsLoading(true);
     api.updateUserData(userData).then((currentUser) => {
       setCurrentUser(currentUser);
       closeAllPopups();
     })
       .catch((err) => {
         console.error(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function handleUpdateAvatar({ avatar }) {
+    setIsLoading(true);
     api.editAvatar({ avatar }).then((userData) => {
         setCurrentUser(userData);
         closeAllPopups();
       })
       .catch((err) => {
         console.error(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function handleAddPlaceSubmit(newPlace) {
+    setIsLoading(true);
     api.addCard(newPlace).then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
         console.error(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }
 
   return (
@@ -152,16 +160,19 @@ function App() {
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
+            isLoading={isLoading}
           />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
+            isLoading={isLoading}
           />
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
+            isLoading={isLoading}
           />
           <PopupWithForm
             name='confirm'
