@@ -1,35 +1,24 @@
 import PopupWithForm from "./PopupWithForm";
-import React from "react";
+import React, {useEffect} from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext";
+import {useForm} from "../hooks/useForm";
 
 function EditProfilePopup ({isOpen, onClose, isLoading, onUpdateUser}) {
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-
+  const {values, handleChange, setValues} = useForm({})
   const currentUser = React.useContext(CurrentUserContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if(currentUser){
-      setName(currentUser.name);
-      setDescription(currentUser.about);
+      setValues({name: currentUser.name, description: currentUser.about})
     }
   }, [currentUser, isOpen]);
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    // Передаём значения управляемых компонентов во внешний обработчик
     onUpdateUser({
-      name,
-      about: description,
+      name: values.name,
+      about: values.description,
     });
   }
 
@@ -52,8 +41,8 @@ function EditProfilePopup ({isOpen, onClose, isLoading, onUpdateUser}) {
           minLength="2"
           maxLength="40"
           required
-          value={name}
-          onChange={handleNameChange}
+          value={values.name || ''}
+          onChange={handleChange}
         />
         <span className="popup__error popup__error_visible name-input-error"></span>
       </label>
@@ -67,8 +56,8 @@ function EditProfilePopup ({isOpen, onClose, isLoading, onUpdateUser}) {
           minLength="2"
           maxLength="200"
           required
-          value={description}
-          onChange={handleDescriptionChange}
+          value={values.description || ''}
+          onChange={handleChange}
         />
         <span className="popup__error popup__error_visible description-input-error"></span>
       </label>
